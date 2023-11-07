@@ -21,6 +21,7 @@ func main() {
 
 	w.RegisterWorkflow(helloworld.Workflow)
 	w.RegisterActivity(helloworld.Activity)
+	w.RegisterActivity(helloworld.Activity2)
 
 	err = w.Run(worker.InterruptCh())
 	if err != nil {
