@@ -27,7 +27,7 @@ func Workflow(ctx workflow.Context, name string) (string, error) {
 	logger.Info("HelloWorld workflow started", "name", name)
 
 	var result string
-	err := workflow.ExecuteActivity(ctx, Activity, name).Get(ctx, &result)
+	err := workflow.ExecuteActivity(ctx, "Activity", name).Get(ctx, &result)
 	if err != nil {
 		logger.Error("Activity failed.", "Error", err)
 		return "", err
