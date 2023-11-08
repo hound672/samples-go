@@ -33,14 +33,16 @@ func Workflow(ctx workflow.Context, name string) (string, error) {
 		return "", err
 	}
 
-	if err := workflow.ExecuteActivity(ctx, Activity2, name).Get(ctx, &result); err != nil {
+	var res2 int
+	if err := workflow.ExecuteActivity(ctx, Activity2, name).Get(ctx, &res2); err != nil {
 		logger.Error("222222 failed", "Error", err)
 		return "", err
 	}
+	fmt.Printf("RES2: %v\n", res2)
 
 	logger.Info("HelloWorld workflow completed.", "result", result)
 
-	return result + "SOME PAYLOAD", nil
+	return fmt.Sprintf("RES: %s::%d", result, res2), nil
 }
 
 var cnt int
@@ -59,10 +61,10 @@ func Activity(ctx context.Context, name string) (string, error) {
 	return "Hello " + name + "!2222", nil
 }
 
-func Activity2(ctx context.Context, name string) (string, error) {
+func Activity2(ctx context.Context, name string) (int, error) {
 	fmt.Printf("22222222222222 ACTIVITY!!!!!!!!!!!!!!!!: %d\n", cnt)
 
 	logger := activity.GetLogger(ctx)
 	logger.Info("Activity", "name", name)
-	return "ACT 2 Hello " + name + "!2222", nil
+	return 123, nil
 }
